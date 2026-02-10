@@ -63,7 +63,7 @@ output_actions = infer.forward(
 )
 ```
 
-### Pi05 Triton inference (new)
+### Pi05 Triton inference
 
 ```python
 converted_checkpoint = pickle.load(open('converted_checkpoint.pkl', 'rb'))
@@ -86,10 +86,10 @@ output_actions = infer.forward(
 )
 ```
 
-### DM0 Triton inference
+### DM0 Triton inference (new)
 
 ```python
-converted_checkpoint = torch.load('converted_checkpoint.pkl', map_location=device, weights_only=True)
+converted_checkpoint = torch.load('converted_checkpoint.pt', map_location=device, weights_only=True)
 
 from dm0_infer import DM0Inference
 
@@ -125,7 +125,7 @@ python3 convert_from_jax_pi05.py \
 ```bash
 python3 convert_dm0_weight.py \
    --model_path /path/to/checkpoint/folder\
-   --output converted_checkpoint.pkl
+   --output converted_checkpoint.pt
 ```
 
 The code is specifically tuned on RTX 4090, CUDA 12.6, but it should work on similar platforms so long as torch and triton themselves work.
