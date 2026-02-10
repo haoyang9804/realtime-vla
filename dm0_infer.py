@@ -1070,9 +1070,9 @@ class DM0Inference:
             'conv1_buf': self.buffers['vision_conv1_buf'],
             'x_2d': self.buffers['vision_x_2d'],
         }
-        # loaded = torch.load(weight_path, map_location=device, weights_only=True)
-        # for k in self.weights:
-        #     self.weights[k].copy_(loaded[k])
+        loaded = torch.load(weight_path, map_location=device, weights_only=True)
+        for k in self.weights:
+            self.weights[k].copy_(loaded[k])
         self._compute_rope_weights(config.llm_rope_theta)
         self.freqs_cos, self.freqs_sin = compute_2d_freqs_cache(device=device)
         self.graph = torch.cuda.CUDAGraph()
