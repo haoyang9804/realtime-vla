@@ -58,6 +58,8 @@ output_actions = infer.forward(
 
 ### Pi05 Triton inference
 
+Pi05 `discrete_state_input=True` requires the real PaliGemma tokenizer. See [PI05_BENCHMARK_README.md](PI05_BENCHMARK_README.md) for the `google/paligemma-3b-pt-224` download/authentication flow and local benchmark commands.
+
 ```python
 converted_checkpoint = pickle.load(open('converted_checkpoint.pkl', 'rb'))
 
@@ -68,6 +70,7 @@ infer = Pi05Inference(
   num_views=number_of_images,
   chunk_size=length_of_trajectory,
   tokenizer_path="/path/to/paligemma-3b-pt-224",
+  max_prompt_len=max_prompt_len_from_your_test_cases,
   # discrete_state_input=True is recommended (and matches `test.py`)
   discrete_state_input=True,
 )

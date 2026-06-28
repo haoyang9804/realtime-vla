@@ -1,4 +1,9 @@
-from pi05_attention_flash import flash_mqa_decoder, flash_mqa_encoder
+from pi05_attention_flash import (
+    ensure_official_flash_encoder_buffers,
+    flash_mqa_decoder,
+    official_flash_mqa_encoder,
+    prepare_official_flash_encoder_buffers,
+)
 from pi05_infer import (
     Pi05Inference,
     adarms_matmul_k_1024_32_bias_res,
@@ -27,6 +32,7 @@ def transformer_encoder_flash(weights, buffers, encoder_seq_len):
         buffers["encoder_x"],
         buffers["vision_x_norm"],
     )
+    prepare_official_flash_encoder_buffers(buffers)
     for i in range(18):
         rms_matmul_n_2048_2560_qkv_rope(
             buffers["encoder_x"],
@@ -38,7 +44,7 @@ def transformer_encoder_flash(weights, buffers, encoder_seq_len):
             buffers["encoder_x_norm"],
         )
         if i != 17:
-            flash_mqa_encoder(buffers, i, encoder_seq_len)
+            official_flash_mqa_encoder(buffers, i, encoder_seq_len)
             matmul_n_2048_2048_res(
                 buffers["encoder_ctx_buf"].view(-1, 2048),
                 weights["encoder_attn_o_w"][i],
@@ -139,5 +145,9 @@ def pi05_model_flash(weights, buffers, num_views, encoder_seq_len, num_steps=10)
 
 
 class Pi05FlashInference(Pi05Inference):
+    def record_infer_graph(self):
+        ensure_official_flash_encoder_buffers(self.buffers, self.encoder_seq_len)
+        super().record_infer_graph()
+
     def record_run(self):
         pi05_model_flash(self.weights, self.buffers, self.num_views, self.encoder_seq_len)

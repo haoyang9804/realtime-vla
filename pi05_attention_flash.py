@@ -3,6 +3,7 @@ from collections.abc import MutableMapping
 import torch
 import triton
 import triton.language as tl
+from flash_attn import flash_attn_varlen_func
 
 
 HEAD_DIM = 256
@@ -11,6 +12,49 @@ BLOCK_M = 16
 BLOCK_N = 64
 ATTN_SCALE = HEAD_DIM**-0.5
 TensorMap = MutableMapping[str, torch.Tensor]
+
+
+def ensure_official_flash_encoder_buffers(
+    buffers: TensorMap,
+    encoder_seq_len: int,
+) -> None:
+    if "official_flash_encoder_cu_q" not in buffers:
+        buffers["official_flash_encoder_cu_q"] = torch.tensor(
+            [0, encoder_seq_len],
+            dtype=torch.int32,
+            device="cuda",
+        )
+    if "official_flash_encoder_cu_k" not in buffers:
+        buffers["official_flash_encoder_cu_k"] = torch.empty(
+            2,
+            dtype=torch.int32,
+            device="cuda",
+        )
+        buffers["official_flash_encoder_cu_k"][0].fill_(0)
+
+
+def prepare_official_flash_encoder_buffers(buffers: TensorMap) -> None:
+    buffers["official_flash_encoder_cu_k"][1:2].copy_(buffers["valid_encoder_len"])
+
+
+def official_flash_mqa_encoder(
+    buffers: TensorMap,
+    layer_idx: int,
+    encoder_seq_len: int,
+) -> None:
+    attn = flash_attn_varlen_func(
+        buffers["encoder_Q"].view(encoder_seq_len, NUM_Q_HEADS, HEAD_DIM),
+        buffers["encoder_K"][layer_idx, :encoder_seq_len].view(encoder_seq_len, 1, HEAD_DIM),
+        buffers["encoder_V"][layer_idx, :encoder_seq_len].view(encoder_seq_len, 1, HEAD_DIM),
+        buffers["official_flash_encoder_cu_q"],
+        buffers["official_flash_encoder_cu_k"],
+        encoder_seq_len,
+        encoder_seq_len,
+        dropout_p=0.0,
+        softmax_scale=ATTN_SCALE,
+        causal=False,
+    )
+    buffers["encoder_ctx_buf"].copy_(attn.contiguous().view(encoder_seq_len * NUM_Q_HEADS, HEAD_DIM))
 
 
 @triton.jit

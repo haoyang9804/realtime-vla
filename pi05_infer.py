@@ -538,6 +538,7 @@ class Pi05Inference:
         discrete_state_input: bool = True,
         max_prompt_text: str | None = None,
         state_dim_for_max_prompt: int | None = None,
+        max_prompt_len: int | None = None,
     ):
         self.discrete_state_input = discrete_state_input
         self.tokenizer_path = tokenizer_path
@@ -547,7 +548,9 @@ class Pi05Inference:
         self.max_tokenize_len = int(max_tokenize_len)
         if discrete_state_input:
             self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_path)
-            if max_prompt_text is not None and state_dim_for_max_prompt is not None:
+            if max_prompt_len is not None:
+                self.max_prompt_len = int(max_prompt_len)
+            elif max_prompt_text is not None and state_dim_for_max_prompt is not None:
                 self.max_prompt_len = self.estimate_max_prompt_len(
                     tokenizer=self.tokenizer,
                     task_prompt=max_prompt_text,
@@ -816,6 +819,11 @@ class Pi05Inference:
         else:
             prompt_embeds = self.weights['language_embeds']
             prompt_len = self.weights['language_embeds'].shape[0]
+        if prompt_len > self.max_prompt_len:
+            raise ValueError(
+                f"prompt_len={prompt_len} exceeds allocated max_prompt_len={self.max_prompt_len}; "
+                "initialize Pi05Inference with a larger max_prompt_len"
+            )
         start = self.num_views * 256
         self.buffers['encoder_x'][start : start + prompt_len].copy_(prompt_embeds)
         self.buffers['valid_encoder_len'].fill_(start + prompt_len)

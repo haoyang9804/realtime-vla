@@ -1,0 +1,121 @@
+{
+  "checkpoint": "../models/pi05_base/converted_realtime_vla.pkl",
+  "num_views": 3,
+  "chunk_size": 50,
+  "num_cases": 3,
+  "cases": [
+    {
+      "name": "case_0",
+      "prompt": "pick up the object",
+      "state_dim": 32,
+      "state_min": 0,
+      "state_max": 31,
+      "prompt_len": 101,
+      "image_shape": [
+        3,
+        224,
+        224,
+        3
+      ],
+      "noise_shape": [
+        50,
+        32
+      ]
+    },
+    {
+      "name": "case_1",
+      "prompt": "pick up the object; keep the wrist cameras aligned with the object",
+      "state_dim": 32,
+      "state_min": 17,
+      "state_max": 48,
+      "prompt_len": 120,
+      "image_shape": [
+        3,
+        224,
+        224,
+        3
+      ],
+      "noise_shape": [
+        50,
+        32
+      ]
+    },
+    {
+      "name": "case_2",
+      "prompt": "move the red block to the left side of the tray and return to neutral",
+      "state_dim": 32,
+      "state_min": 34,
+      "state_max": 65,
+      "prompt_len": 122,
+      "image_shape": [
+        3,
+        224,
+        224,
+        3
+      ],
+      "noise_shape": [
+        50,
+        32
+      ]
+    }
+  ],
+  "max_prompt_len": 122,
+  "warmup": 20,
+  "iterations": 200,
+  "discrete_state_input": true,
+  "fake_tokenizer": false,
+  "tokenizer_path": "../models/tokenizers/google-paligemma-3b-pt-224",
+  "cuda_device": "NVIDIA A100-SXM4-80GB",
+  "output_shape": [
+    50,
+    32
+  ],
+  "output_dtype": "torch.bfloat16",
+  "output_device": "cuda:0",
+  "output_finite": true,
+  "output_min": -1.2109375,
+  "output_max": 0.423828125,
+  "output_mean": -0.40542951226234436,
+  "latency_ms": {
+    "min": 47.52342224121094,
+    "p50": 47.76651191711426,
+    "mean": 47.793110084533694,
+    "p90": 47.95510711669922,
+    "p95": 48.015630912780765,
+    "p99": 48.237027359008785,
+    "max": 48.35724639892578,
+    "stdev": 0.13307167955494623
+  },
+  "latency_ms_by_case": {
+    "case_0": {
+      "min": 47.52342224121094,
+      "p50": 47.741249084472656,
+      "mean": 47.763114986135,
+      "p90": 47.91506576538086,
+      "p95": 47.97955665588378,
+      "p99": 48.215535659790035,
+      "max": 48.23091125488281,
+      "stdev": 0.13847993937289896
+    },
+    "case_1": {
+      "min": 47.53577423095703,
+      "p50": 47.780033111572266,
+      "mean": 47.80631745751224,
+      "p90": 47.98115310668945,
+      "p95": 48.023325729370114,
+      "p99": 48.277435302734375,
+      "max": 48.35724639892578,
+      "stdev": 0.1390632344807191
+    },
+    "case_2": {
+      "min": 47.622398376464844,
+      "p50": 47.78604698181152,
+      "mean": 47.8101521694299,
+      "p90": 47.94566345214844,
+      "p95": 47.96153545379639,
+      "p99": 48.143249702453616,
+      "max": 48.3070068359375,
+      "stdev": 0.11706422051680862
+    }
+  }
+}
