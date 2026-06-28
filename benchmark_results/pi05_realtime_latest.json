@@ -1,0 +1,31 @@
+{
+  "checkpoint": "../models/pi05_base/converted_realtime_vla.pkl",
+  "num_views": 3,
+  "chunk_size": 50,
+  "warmup": 20,
+  "iterations": 200,
+  "discrete_state_input": false,
+  "fake_tokenizer": false,
+  "tokenizer_path": null,
+  "cuda_device": "NVIDIA A100-SXM4-80GB",
+  "output_shape": [
+    50,
+    32
+  ],
+  "output_dtype": "torch.bfloat16",
+  "output_device": "cuda:0",
+  "output_finite": true,
+  "output_min": -0.8515625,
+  "output_max": 0.040771484375,
+  "output_mean": -0.03801799565553665,
+  "latency_ms": {
+    "min": 46.623233795166016,
+    "p50": 47.01625633239746,
+    "mean": 46.996735649108885,
+    "p90": 47.15027770996094,
+    "p95": 47.19681949615479,
+    "p99": 47.30383647918701,
+    "max": 47.990943908691406,
+    "stdev": 0.15785800821002902
+  }
+}
