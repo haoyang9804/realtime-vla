@@ -1,0 +1,113 @@
+{
+  "checkpoint": "../models/pi05_base/converted_realtime_vla.pkl",
+  "implementations": [
+    "base",
+    "torch"
+  ],
+  "num_views": 3,
+  "chunk_size": 50,
+  "num_cases": 1,
+  "cases": [
+    {
+      "name": "case_0",
+      "prompt": "pick up the object",
+      "state_dim": 32,
+      "state_min": 0,
+      "state_max": 31,
+      "prompt_len": 101,
+      "image_shape": [
+        3,
+        224,
+        224,
+        3
+      ],
+      "noise_shape": [
+        50,
+        32
+      ]
+    }
+  ],
+  "max_prompt_len": 101,
+  "warmup": 3,
+  "iterations": 5,
+  "discrete_state_input": true,
+  "fake_tokenizer": false,
+  "tokenizer_path": "../models/tokenizers/google-paligemma-3b-pt-224",
+  "cuda_device": "NVIDIA A100-SXM4-80GB",
+  "results": {
+    "base": {
+      "ok": true,
+      "init_ms": 3398.8779296875,
+      "output_shape": [
+        50,
+        32
+      ],
+      "output_dtype": "torch.bfloat16",
+      "output_device": "cuda:0",
+      "output_finite": true,
+      "output_min": -1.328125,
+      "output_max": 0.56640625,
+      "output_mean": -0.4447079002857208,
+      "latency_ms": {
+        "min": 48.9172477722168,
+        "p50": 49.007808685302734,
+        "mean": 48.992505645751955,
+        "p90": 49.05961608886719,
+        "p95": 49.063743591308594,
+        "p99": 49.067045593261724,
+        "max": 49.06787109375,
+        "stdev": 0.06980767225943509
+      },
+      "latency_ms_by_case": {
+        "case_0": {
+          "min": 48.9172477722168,
+          "p50": 49.007808685302734,
+          "mean": 48.992505645751955,
+          "p90": 49.05961608886719,
+          "p95": 49.063743591308594,
+          "p99": 49.067045593261724,
+          "max": 49.06787109375,
+          "stdev": 0.06980767225943509
+        }
+      },
+      "cuda_peak_allocated_bytes": 8018264576
+    },
+    "torch": {
+      "ok": true,
+      "init_ms": 2428.70947265625,
+      "output_shape": [
+        50,
+        32
+      ],
+      "output_dtype": "torch.bfloat16",
+      "output_device": "cuda:0",
+      "output_finite": true,
+      "output_min": -1.328125,
+      "output_max": 0.5703125,
+      "output_mean": -0.44353172183036804,
+      "latency_ms": {
+        "min": 237.98268127441406,
+        "p50": 242.67491149902344,
+        "mean": 245.5833770751953,
+        "p90": 253.7490936279297,
+        "p95": 254.76177673339842,
+        "p99": 255.57192321777345,
+        "max": 255.7744598388672,
+        "stdev": 7.407986071957333
+      },
+      "latency_ms_by_case": {
+        "case_0": {
+          "min": 237.98268127441406,
+          "p50": 242.67491149902344,
+          "mean": 245.5833770751953,
+          "p90": 253.7490936279297,
+          "p95": 254.76177673339842,
+          "p99": 255.57192321777345,
+          "max": 255.7744598388672,
+          "stdev": 7.407986071957333
+        }
+      },
+      "cuda_peak_allocated_bytes": 8023031296
+    }
+  }
+}

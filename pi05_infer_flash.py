@@ -1,6 +1,7 @@
 from pi05_attention_flash import (
     ensure_official_flash_encoder_buffers,
-    flash_mqa_decoder,
+    ensure_split_flash_decoder_buffers,
+    flash_mqa_decoder_split,
     official_flash_mqa_encoder,
     prepare_official_flash_encoder_buffers,
 )
@@ -91,7 +92,7 @@ def transformer_decoder_flash(weights, buffers, encoder_seq_len, num_steps=10):
                 buffers["encoder_K"][i, encoder_seq_len : encoder_seq_len + seq_len],
                 buffers["encoder_V"][i, encoder_seq_len : encoder_seq_len + seq_len],
             )
-            flash_mqa_decoder(buffers, i, encoder_seq_len, seq_len)
+            flash_mqa_decoder_split(buffers, i, encoder_seq_len, seq_len)
             matmul_k_2048_1024_gate(
                 buffers["decoder_q_buf"].view(-1, 2048),
                 weights["decoder_attn_o_w"][i],
@@ -147,6 +148,7 @@ def pi05_model_flash(weights, buffers, num_views, encoder_seq_len, num_steps=10)
 class Pi05FlashInference(Pi05Inference):
     def record_infer_graph(self):
         ensure_official_flash_encoder_buffers(self.buffers, self.encoder_seq_len)
+        ensure_split_flash_decoder_buffers(self.buffers, self.chunk_size)
         super().record_infer_graph()
 
     def record_run(self):

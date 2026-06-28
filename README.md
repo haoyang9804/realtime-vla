@@ -82,6 +82,31 @@ output_actions = infer.forward(
 )
 ```
 
+### Pi05 PyTorch reference inference
+
+`../models/pi05_base` is not a standard Transformers `AutoModel` checkpoint: its config uses `"type": "pi05"` and does not define `model_type`. `Pi05TorchInference` mirrors `pi05_infer.py`'s buffers and forward flow, replacing the Triton kernels with torch tensor ops and compiling the torch kernel-replacement blocks with `torch.compile`. It still requires the real PaliGemma tokenizer for `discrete_state_input=True`; the torch implementation does not accept the fake tokenizer debug path.
+
+```python
+converted_checkpoint = pickle.load(open('converted_checkpoint.pkl', 'rb'))
+
+from pi05_infer_torch import Pi05TorchInference
+
+infer = Pi05TorchInference(
+  checkpoint=converted_checkpoint,
+  num_views=number_of_images,
+  chunk_size=length_of_trajectory,
+  tokenizer_path="/path/to/paligemma-3b-pt-224",
+  max_prompt_len=max_prompt_len_from_your_test_cases,
+  discrete_state_input=True,
+)
+output_actions = infer.forward(
+   normalized_observation_image_bfloat16,
+   diffusion_input_noise_bfloat16,
+   task_prompt,
+   state_tokens,
+)
+```
+
 ### DM0 Triton inference (new)
 
 ```python

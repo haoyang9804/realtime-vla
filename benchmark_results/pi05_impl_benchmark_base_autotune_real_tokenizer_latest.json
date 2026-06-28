@@ -1,0 +1,189 @@
+{
+  "checkpoint": "../models/pi05_base/converted_realtime_vla.pkl",
+  "implementations": [
+    "base",
+    "autotune"
+  ],
+  "num_views": 3,
+  "chunk_size": 50,
+  "num_cases": 3,
+  "cases": [
+    {
+      "name": "case_0",
+      "prompt": "pick up the object",
+      "state_dim": 32,
+      "state_min": 0,
+      "state_max": 31,
+      "prompt_len": 101,
+      "image_shape": [
+        3,
+        224,
+        224,
+        3
+      ],
+      "noise_shape": [
+        50,
+        32
+      ]
+    },
+    {
+      "name": "case_1",
+      "prompt": "pick up the object; keep the wrist cameras aligned with the object",
+      "state_dim": 32,
+      "state_min": 17,
+      "state_max": 48,
+      "prompt_len": 120,
+      "image_shape": [
+        3,
+        224,
+        224,
+        3
+      ],
+      "noise_shape": [
+        50,
+        32
+      ]
+    },
+    {
+      "name": "case_2",
+      "prompt": "move the red block to the left side of the tray and return to neutral",
+      "state_dim": 32,
+      "state_min": 34,
+      "state_max": 65,
+      "prompt_len": 122,
+      "image_shape": [
+        3,
+        224,
+        224,
+        3
+      ],
+      "noise_shape": [
+        50,
+        32
+      ]
+    }
+  ],
+  "max_prompt_len": 122,
+  "warmup": 20,
+  "iterations": 200,
+  "discrete_state_input": true,
+  "fake_tokenizer": false,
+  "tokenizer_path": "../models/tokenizers/google-paligemma-3b-pt-224",
+  "cuda_device": "NVIDIA A100-SXM4-80GB",
+  "results": {
+    "base": {
+      "ok": true,
+      "init_ms": 3385.343994140625,
+      "output_shape": [
+        50,
+        32
+      ],
+      "output_dtype": "torch.bfloat16",
+      "output_device": "cuda:0",
+      "output_finite": true,
+      "output_min": -1.2109375,
+      "output_max": 0.423828125,
+      "output_mean": -0.40542951226234436,
+      "latency_ms": {
+        "min": 47.51084899902344,
+        "p50": 47.78278350830078,
+        "mean": 47.8178985786438,
+        "p90": 48.059952926635745,
+        "p95": 48.134325218200686,
+        "p99": 48.32633293151856,
+        "max": 48.49046325683594,
+        "stdev": 0.1742968628006867
+      },
+      "latency_ms_by_case": {
+        "case_0": {
+          "min": 47.51084899902344,
+          "p50": 47.70713424682617,
+          "mean": 47.74035092254183,
+          "p90": 47.93446350097656,
+          "p95": 48.02240333557129,
+          "p99": 48.13154823303223,
+          "max": 48.18086242675781,
+          "stdev": 0.1460606391039943
+        },
+        "case_1": {
+          "min": 47.51331329345703,
+          "p50": 47.815711975097656,
+          "mean": 47.84679839860147,
+          "p90": 48.06407089233399,
+          "p95": 48.10368690490723,
+          "p99": 48.18898902893066,
+          "max": 48.240478515625,
+          "stdev": 0.162862273614144
+        },
+        "case_2": {
+          "min": 47.59151840209961,
+          "p50": 47.812767028808594,
+          "mean": 47.867283503214516,
+          "p90": 48.120384216308594,
+          "p95": 48.232665061950684,
+          "p99": 48.39193325042724,
+          "max": 48.49046325683594,
+          "stdev": 0.18675551335076201
+        }
+      },
+      "cuda_peak_allocated_bytes": 8020887040
+    },
+    "autotune": {
+      "ok": true,
+      "init_ms": 31942.359375,
+      "output_shape": [
+        50,
+        32
+      ],
+      "output_dtype": "torch.bfloat16",
+      "output_device": "cuda:0",
+      "output_finite": true,
+      "output_min": -1.2109375,
+      "output_max": 0.423828125,
+      "output_mean": -0.40542951226234436,
+      "latency_ms": {
+        "min": 42.5384635925293,
+        "p50": 43.11358451843262,
+        "mean": 43.10286592483521,
+        "p90": 43.48900299072266,
+        "p95": 43.561791038513185,
+        "p99": 43.71260276794433,
+        "max": 44.02608108520508,
+        "stdev": 0.31985921953647983
+      },
+      "latency_ms_by_case": {
+        "case_0": {
+          "min": 42.5384635925293,
+          "p50": 43.064510345458984,
+          "mean": 43.063913601547924,
+          "p90": 43.46910018920899,
+          "p95": 43.53979606628418,
+          "p99": 43.623819274902345,
+          "max": 43.71161651611328,
+          "stdev": 0.3094306059820717
+        },
+        "case_1": {
+          "min": 42.60291290283203,
+          "p50": 43.144126892089844,
+          "mean": 43.12697982788086,
+          "p90": 43.52717895507813,
+          "p95": 43.574202346801755,
+          "p99": 43.702360763549805,
+          "max": 43.81024169921875,
+          "stdev": 0.3238267479358399
+        },
+        "case_2": {
+          "min": 42.608638763427734,
+          "p50": 43.12014389038086,
+          "mean": 43.117929169625945,
+          "p90": 43.49705696105957,
+          "p95": 43.54788780212402,
+          "p99": 43.77182025909424,
+          "max": 44.02608108520508,
+          "stdev": 0.3273142773177634
+        }
+      },
+      "cuda_peak_allocated_bytes": 8288996352
+    }
+  }
+}

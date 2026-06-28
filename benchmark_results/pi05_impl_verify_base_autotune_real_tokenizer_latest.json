@@ -1,0 +1,203 @@
+{
+  "checkpoint": "../models/pi05_base/converted_realtime_vla.pkl",
+  "implementations": [
+    "base",
+    "autotune"
+  ],
+  "num_views": 3,
+  "chunk_size": 50,
+  "num_cases": 3,
+  "cases": [
+    {
+      "name": "case_0",
+      "prompt": "pick up the object",
+      "state_dim": 32,
+      "state_min": 0,
+      "state_max": 31,
+      "prompt_len": 101,
+      "image_shape": [
+        3,
+        224,
+        224,
+        3
+      ],
+      "noise_shape": [
+        50,
+        32
+      ]
+    },
+    {
+      "name": "case_1",
+      "prompt": "pick up the object; keep the wrist cameras aligned with the object",
+      "state_dim": 32,
+      "state_min": 17,
+      "state_max": 48,
+      "prompt_len": 120,
+      "image_shape": [
+        3,
+        224,
+        224,
+        3
+      ],
+      "noise_shape": [
+        50,
+        32
+      ]
+    },
+    {
+      "name": "case_2",
+      "prompt": "move the red block to the left side of the tray and return to neutral",
+      "state_dim": 32,
+      "state_min": 34,
+      "state_max": 65,
+      "prompt_len": 122,
+      "image_shape": [
+        3,
+        224,
+        224,
+        3
+      ],
+      "noise_shape": [
+        50,
+        32
+      ]
+    }
+  ],
+  "max_prompt_len": 122,
+  "seed": 0,
+  "discrete_state_input": true,
+  "fake_tokenizer": false,
+  "tokenizer_path": "../models/tokenizers/google-paligemma-3b-pt-224",
+  "cuda_device": "NVIDIA A100-SXM4-80GB",
+  "results": {
+    "base": {
+      "ok": true,
+      "init_ms": 4509.496229700744,
+      "cases": {
+        "case_0": {
+          "output": {
+            "shape": [
+              50,
+              32
+            ],
+            "dtype": "torch.bfloat16",
+            "stats_dtype": "torch.float32",
+            "finite": true,
+            "min": -1.3203125,
+            "max": 0.57421875,
+            "mean": -0.4438723623752594,
+            "device": "cuda:0"
+          }
+        },
+        "case_1": {
+          "output": {
+            "shape": [
+              50,
+              32
+            ],
+            "dtype": "torch.bfloat16",
+            "stats_dtype": "torch.float32",
+            "finite": true,
+            "min": -1.2109375,
+            "max": 0.423828125,
+            "mean": -0.40542954206466675,
+            "device": "cuda:0"
+          }
+        },
+        "case_2": {
+          "output": {
+            "shape": [
+              50,
+              32
+            ],
+            "dtype": "torch.bfloat16",
+            "stats_dtype": "torch.float32",
+            "finite": true,
+            "min": -1.0234375,
+            "max": 0.294921875,
+            "mean": -0.4125722050666809,
+            "device": "cuda:0"
+          }
+        }
+      },
+      "cuda_peak_allocated_bytes": 8020887040
+    },
+    "autotune": {
+      "ok": true,
+      "init_ms": 109268.18749215454,
+      "cases": {
+        "case_0": {
+          "output": {
+            "shape": [
+              50,
+              32
+            ],
+            "dtype": "torch.bfloat16",
+            "stats_dtype": "torch.float32",
+            "finite": true,
+            "min": -1.3203125,
+            "max": 0.57421875,
+            "mean": -0.4438723623752594,
+            "device": "cuda:0"
+          },
+          "compare_to_base": {
+            "allclose": true,
+            "atol": 0.05,
+            "rtol": 0.05,
+            "max_abs": 0.0,
+            "mean_abs": 0.0,
+            "max_rel": 0.0
+          }
+        },
+        "case_1": {
+          "output": {
+            "shape": [
+              50,
+              32
+            ],
+            "dtype": "torch.bfloat16",
+            "stats_dtype": "torch.float32",
+            "finite": true,
+            "min": -1.2109375,
+            "max": 0.423828125,
+            "mean": -0.40542954206466675,
+            "device": "cuda:0"
+          },
+          "compare_to_base": {
+            "allclose": true,
+            "atol": 0.05,
+            "rtol": 0.05,
+            "max_abs": 0.0,
+            "mean_abs": 0.0,
+            "max_rel": 0.0
+          }
+        },
+        "case_2": {
+          "output": {
+            "shape": [
+              50,
+              32
+            ],
+            "dtype": "torch.bfloat16",
+            "stats_dtype": "torch.float32",
+            "finite": true,
+            "min": -1.0234375,
+            "max": 0.294921875,
+            "mean": -0.4125722050666809,
+            "device": "cuda:0"
+          },
+          "compare_to_base": {
+            "allclose": true,
+            "atol": 0.05,
+            "rtol": 0.05,
+            "max_abs": 0.0,
+            "mean_abs": 0.0,
+            "max_rel": 0.0
+          }
+        }
+      },
+      "cuda_peak_allocated_bytes": 8288996352
+    }
+  },
+  "overall_ok": true
+}

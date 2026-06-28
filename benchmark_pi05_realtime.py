@@ -16,6 +16,8 @@ import pi05_infer
 
 IMPLEMENTATIONS = {
     "base": ("pi05_infer", "Pi05Inference"),
+    "autotune": ("pi05_infer_autotune", "Pi05AutotuneInference"),
+    "torch": ("pi05_infer_torch", "Pi05TorchInference"),
     "sdpa": ("pi05_infer_sdpa", "Pi05SdpaInference"),
     "flash": ("pi05_infer_flash", "Pi05FlashInference"),
 }

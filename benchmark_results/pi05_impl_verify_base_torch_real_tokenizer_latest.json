@@ -1,0 +1,91 @@
+{
+  "checkpoint": "../models/pi05_base/converted_realtime_vla.pkl",
+  "implementations": [
+    "base",
+    "torch"
+  ],
+  "num_views": 3,
+  "chunk_size": 50,
+  "num_cases": 1,
+  "cases": [
+    {
+      "name": "case_0",
+      "prompt": "pick up the object",
+      "state_dim": 32,
+      "state_min": 0,
+      "state_max": 31,
+      "prompt_len": 101,
+      "image_shape": [
+        3,
+        224,
+        224,
+        3
+      ],
+      "noise_shape": [
+        50,
+        32
+      ]
+    }
+  ],
+  "max_prompt_len": 101,
+  "seed": 0,
+  "discrete_state_input": true,
+  "fake_tokenizer": false,
+  "tokenizer_path": "../models/tokenizers/google-paligemma-3b-pt-224",
+  "cuda_device": "NVIDIA A100-SXM4-80GB",
+  "results": {
+    "base": {
+      "ok": true,
+      "init_ms": 4443.052527494729,
+      "cases": {
+        "case_0": {
+          "output": {
+            "shape": [
+              50,
+              32
+            ],
+            "dtype": "torch.bfloat16",
+            "stats_dtype": "torch.float32",
+            "finite": true,
+            "min": -1.328125,
+            "max": 0.56640625,
+            "mean": -0.44470787048339844,
+            "device": "cuda:0"
+          }
+        }
+      },
+      "cuda_peak_allocated_bytes": 8018264576
+    },
+    "torch": {
+      "ok": true,
+      "init_ms": 2848.5105503350496,
+      "cases": {
+        "case_0": {
+          "output": {
+            "shape": [
+              50,
+              32
+            ],
+            "dtype": "torch.bfloat16",
+            "stats_dtype": "torch.float32",
+            "finite": true,
+            "min": -1.328125,
+            "max": 0.5703125,
+            "mean": -0.44353172183036804,
+            "device": "cuda:0"
+          },
+          "compare_to_base": {
+            "allclose": true,
+            "atol": 0.05,
+            "rtol": 0.05,
+            "max_abs": 0.015625,
+            "mean_abs": 0.0025456410367041826,
+            "max_rel": 9.409638404846191
+          }
+        }
+      },
+      "cuda_peak_allocated_bytes": 8023031296
+    }
+  },
+  "overall_ok": true
+}

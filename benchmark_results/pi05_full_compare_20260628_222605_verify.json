@@ -1,0 +1,287 @@
+{
+  "checkpoint": "../models/pi05_base/converted_realtime_vla.pkl",
+  "implementations": [
+    "base",
+    "autotune",
+    "torch",
+    "flash"
+  ],
+  "num_views": 3,
+  "chunk_size": 50,
+  "num_cases": 3,
+  "cases": [
+    {
+      "name": "case_0",
+      "prompt": "pick up the object",
+      "state_dim": 32,
+      "state_min": 0,
+      "state_max": 31,
+      "prompt_len": 101,
+      "image_shape": [
+        3,
+        224,
+        224,
+        3
+      ],
+      "noise_shape": [
+        50,
+        32
+      ]
+    },
+    {
+      "name": "case_1",
+      "prompt": "pick up the object; keep the wrist cameras aligned with the object",
+      "state_dim": 32,
+      "state_min": 17,
+      "state_max": 48,
+      "prompt_len": 120,
+      "image_shape": [
+        3,
+        224,
+        224,
+        3
+      ],
+      "noise_shape": [
+        50,
+        32
+      ]
+    },
+    {
+      "name": "case_2",
+      "prompt": "move the red block to the left side of the tray and return to neutral",
+      "state_dim": 32,
+      "state_min": 34,
+      "state_max": 65,
+      "prompt_len": 122,
+      "image_shape": [
+        3,
+        224,
+        224,
+        3
+      ],
+      "noise_shape": [
+        50,
+        32
+      ]
+    }
+  ],
+  "max_prompt_len": 122,
+  "seed": 0,
+  "discrete_state_input": true,
+  "fake_tokenizer": false,
+  "tokenizer_path": "../models/tokenizers/google-paligemma-3b-pt-224",
+  "cuda_device": "NVIDIA A100-SXM4-80GB",
+  "results": {
+    "base": {
+      "ok": true,
+      "init_ms": 3311.3767374306917,
+      "cases": {
+        "case_0": {
+          "output": {
+            "shape": [
+              50,
+              32
+            ],
+            "dtype": "torch.bfloat16",
+            "stats_dtype": "torch.float32",
+            "finite": true,
+            "min": -1.3203125,
+            "max": 0.57421875,
+            "mean": -0.4438723623752594,
+            "device": "cuda:0"
+          }
+        },
+        "case_1": {
+          "output": {
+            "shape": [
+              50,
+              32
+            ],
+            "dtype": "torch.bfloat16",
+            "stats_dtype": "torch.float32",
+            "finite": true,
+            "min": -1.2109375,
+            "max": 0.423828125,
+            "mean": -0.40542954206466675,
+            "device": "cuda:0"
+          }
+        },
+        "case_2": {
+          "output": {
+            "shape": [
+              50,
+              32
+            ],
+            "dtype": "torch.bfloat16",
+            "stats_dtype": "torch.float32",
+            "finite": true,
+            "min": -1.0234375,
+            "max": 0.294921875,
+            "mean": -0.4125722050666809,
+            "device": "cuda:0"
+          }
+        }
+      },
+      "cuda_peak_allocated_bytes": 8020887040
+    },
+    "autotune": {
+      "ok": true,
+      "init_ms": 31498.123774304986,
+      "cases": {
+        "case_0": {
+          "output": {
+            "shape": [
+              50,
+              32
+            ],
+            "dtype": "torch.bfloat16",
+            "stats_dtype": "torch.float32",
+            "finite": true,
+            "min": -1.3203125,
+            "max": 0.57421875,
+            "mean": -0.4438723623752594,
+            "device": "cuda:0"
+          },
+          "compare_to_base": {
+            "allclose": true,
+            "atol": 0.05,
+            "rtol": 0.05,
+            "max_abs": 0.0,
+            "mean_abs": 0.0,
+            "max_rel": 0.0
+          }
+        },
+        "case_1": {
+          "output": {
+            "shape": [
+              50,
+              32
+            ],
+            "dtype": "torch.bfloat16",
+            "stats_dtype": "torch.float32",
+            "finite": true,
+            "min": -1.2109375,
+            "max": 0.423828125,
+            "mean": -0.40542954206466675,
+            "device": "cuda:0"
+          },
+          "compare_to_base": {
+            "allclose": true,
+            "atol": 0.05,
+            "rtol": 0.05,
+            "max_abs": 0.0,
+            "mean_abs": 0.0,
+            "max_rel": 0.0
+          }
+        },
+        "case_2": {
+          "output": {
+            "shape": [
+              50,
+              32
+            ],
+            "dtype": "torch.bfloat16",
+            "stats_dtype": "torch.float32",
+            "finite": true,
+            "min": -1.0234375,
+            "max": 0.294921875,
+            "mean": -0.4125722050666809,
+            "device": "cuda:0"
+          },
+          "compare_to_base": {
+            "allclose": true,
+            "atol": 0.05,
+            "rtol": 0.05,
+            "max_abs": 0.0,
+            "mean_abs": 0.0,
+            "max_rel": 0.0
+          }
+        }
+      },
+      "cuda_peak_allocated_bytes": 8288996352
+    },
+    "torch": {
+      "ok": true,
+      "init_ms": 3416.9629579409957,
+      "cases": {
+        "case_0": {
+          "output": {
+            "shape": [
+              50,
+              32
+            ],
+            "dtype": "torch.bfloat16",
+            "stats_dtype": "torch.float32",
+            "finite": true,
+            "min": -1.328125,
+            "max": 0.57421875,
+            "mean": -0.443719744682312,
+            "device": "cuda:0"
+          },
+          "compare_to_base": {
+            "allclose": true,
+            "atol": 0.05,
+            "rtol": 0.05,
+            "max_abs": 0.015625,
+            "mean_abs": 0.002929797861725092,
+            "max_rel": 8.191489219665527
+          }
+        },
+        "case_1": {
+          "output": {
+            "shape": [
+              50,
+              32
+            ],
+            "dtype": "torch.bfloat16",
+            "stats_dtype": "torch.float32",
+            "finite": true,
+            "min": -1.2109375,
+            "max": 0.421875,
+            "mean": -0.40505996346473694,
+            "device": "cuda:0"
+          },
+          "compare_to_base": {
+            "allclose": true,
+            "atol": 0.05,
+            "rtol": 0.05,
+            "max_abs": 0.0126953125,
+            "mean_abs": 0.003166146343573928,
+            "max_rel": 2.754901885986328
+          }
+        },
+        "case_2": {
+          "output": {
+            "shape": [
+              50,
+              32
+            ],
+            "dtype": "torch.bfloat16",
+            "stats_dtype": "torch.float32",
+            "finite": true,
+            "min": -1.0234375,
+            "max": 0.3046875,
+            "mean": -0.4109567701816559,
+            "device": "cuda:0"
+          },
+          "compare_to_base": {
+            "allclose": true,
+            "atol": 0.05,
+            "rtol": 0.05,
+            "max_abs": 0.015625,
+            "mean_abs": 0.0025293659418821335,
+            "max_rel": 5.30939245223999
+          }
+        }
+      },
+      "cuda_peak_allocated_bytes": 8025435136
+    },
+    "flash": {
+      "ok": false,
+      "error_type": "RuntimeError",
+      "error": "Inplace update to inference tensor outside InferenceMode is not allowed.You can make a clone to get a normal tensor before doing inplace update.See https://github.com/pytorch/rfcs/pull/17 for more details.",
+      "traceback": "Traceback (most recent call last):\n  File \"/mlx_devbox/users/mahaoyang/playground/realtime-vla/verify_pi05_impls.py\", line 315, in main\n    case_outputs, impl_result = run_implementation(name, policy_cls, checkpoint, cases, max_prompt_len, args)\n                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/mlx_devbox/users/mahaoyang/playground/realtime-vla/verify_pi05_impls.py\", line 172, in run_implementation\n    policy = policy_cls(\n             ^^^^^^^^^^^\n  File \"/mlx_devbox/users/mahaoyang/playground/realtime-vla/pi05_infer.py\", line 750, in __init__\n    self.record_infer_graph()\n  File \"/mlx_devbox/users/mahaoyang/playground/realtime-vla/pi05_infer_flash.py\", line 152, in record_infer_graph\n    super().record_infer_graph()\n  File \"/mlx_devbox/users/mahaoyang/playground/realtime-vla/pi05_infer.py\", line 803, in record_infer_graph\n    self.infer_graph.capture_begin()\n  File \"/home/tiger/.local/lib/python3.11/site-packages/torch/cuda/graphs.py\", line 93, in capture_begin\n    super().capture_begin(pool=pool, capture_error_mode=capture_error_mode)\nRuntimeError: Inplace update to inference tensor outside InferenceMode is not allowed.You can make a clone to get a normal tensor before doing inplace update.See https://github.com/pytorch/rfcs/pull/17 for more details.\n"
+    }
+  },
+  "overall_ok": false
+}

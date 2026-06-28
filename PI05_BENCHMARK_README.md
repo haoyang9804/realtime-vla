@@ -131,6 +131,8 @@ Use this for the real `discrete_state_input=True` path. By default the benchmark
 
 The `flash` implementation uses official `flash_attn_varlen_func` for encoder MQA attention. Decoder attention still uses the local Triton flash kernel because its valid K/V set is `valid encoder prefix + decoder suffix`, which requires compaction before it can be represented as a standard varlen FlashAttention sequence.
 
+The `torch` implementation in `pi05_infer_torch.py` mirrors `pi05_infer.py`'s buffer layout and forward flow, replacing Triton kernels with torch tensor ops. It compiles the torch kernel-replacement blocks with `torch.compile`; set `PI05_TORCH_COMPILE=0` to force eager torch fallback. This path requires the real PaliGemma tokenizer and does not accept the fake tokenizer debug path.
+
 The default per-case tensor shapes are:
 
 - images: `[3, 224, 224, 3]`, BF16 CUDA
@@ -150,6 +152,22 @@ python3 benchmark_pi05_realtime.py \
   --warmup 20 \
   --iterations 200 \
   --output-json benchmark_results/pi05_impl_benchmark_real_tokenizer_latest.json
+```
+
+Run only the PyTorch reference implementation:
+
+```bash
+python3 benchmark_pi05_realtime.py \
+  --checkpoint ../models/pi05_base/converted_realtime_vla.pkl \
+  --implementations torch \
+  --num-views 3 \
+  --chunk-size 50 \
+  --num-cases 1 \
+  --discrete-state-input \
+  --tokenizer-path ../models/tokenizers/google-paligemma-3b-pt-224 \
+  --warmup 3 \
+  --iterations 5 \
+  --output-json benchmark_results/pi05_impl_benchmark_torch_real_tokenizer_latest.json
 ```
 
 Print the implementation comparison:
@@ -178,6 +196,7 @@ Verify all Pi05 implementations with the same real tokenizer:
 ```bash
 python3 verify_pi05_impls.py \
   --checkpoint ../models/pi05_base/converted_realtime_vla.pkl \
+  --implementations base torch sdpa flash \
   --num-views 3 \
   --chunk-size 50 \
   --num-cases 3 \
