@@ -1,0 +1,88 @@
+{
+  "checkpoint": "../models/pi05_base/converted_realtime_vla.pkl",
+  "implementations": [
+    "base",
+    "sdpa",
+    "flash"
+  ],
+  "num_views": 3,
+  "chunk_size": 50,
+  "seed": 0,
+  "discrete_state_input": true,
+  "fake_tokenizer": true,
+  "tokenizer_path": null,
+  "cuda_device": "NVIDIA A100-SXM4-80GB",
+  "results": {
+    "base": {
+      "ok": true,
+      "init_ms": 3876.9286815077066,
+      "output": {
+        "shape": [
+          50,
+          32
+        ],
+        "dtype": "torch.bfloat16",
+        "stats_dtype": "torch.float32",
+        "finite": true,
+        "min": -0.1689453125,
+        "max": 0.6015625,
+        "mean": 0.012164040468633175,
+        "device": "cuda:0"
+      },
+      "cuda_peak_allocated_bytes": 8027909120
+    },
+    "sdpa": {
+      "ok": true,
+      "init_ms": 2557.9071724787354,
+      "output": {
+        "shape": [
+          50,
+          32
+        ],
+        "dtype": "torch.bfloat16",
+        "stats_dtype": "torch.float32",
+        "finite": true,
+        "min": -0.1689453125,
+        "max": 0.6015625,
+        "mean": 0.012194565497338772,
+        "device": "cuda:0"
+      },
+      "cuda_peak_allocated_bytes": 8137222144,
+      "compare_to_base": {
+        "allclose": true,
+        "atol": 0.05,
+        "rtol": 0.05,
+        "max_abs": 0.00390625,
+        "mean_abs": 0.0003819007542915642,
+        "max_rel": 5.502617835998535
+      }
+    },
+    "flash": {
+      "ok": true,
+      "init_ms": 1787.7141144126654,
+      "output": {
+        "shape": [
+          50,
+          32
+        ],
+        "dtype": "torch.bfloat16",
+        "stats_dtype": "torch.float32",
+        "finite": true,
+        "min": -0.1689453125,
+        "max": 0.6015625,
+        "mean": 0.012269687838852406,
+        "device": "cuda:0"
+      },
+      "cuda_peak_allocated_bytes": 8045400064,
+      "compare_to_base": {
+        "allclose": true,
+        "atol": 0.05,
+        "rtol": 0.05,
+        "max_abs": 0.00390625,
+        "mean_abs": 0.00038087303983047605,
+        "max_rel": 5.581497669219971
+      }
+    }
+  },
+  "overall_ok": true
+}
