@@ -7,7 +7,7 @@ import triton.language as tl
 
 HEAD_DIM = 256
 NUM_Q_HEADS = 8
-BLOCK_M = 8
+BLOCK_M = 16
 BLOCK_N = 64
 ATTN_SCALE = HEAD_DIM**-0.5
 TensorMap = MutableMapping[str, torch.Tensor]
